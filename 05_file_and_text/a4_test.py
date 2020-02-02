@@ -28,34 +28,30 @@ def getfilelist(pathname):
     return sorted(files)
 
 
-
-# TODO avoid \W and go the more sophisticated route
-split_pattern = '[\\s_' + string.punctuation.replace('.', '\\.') + ']+'
+# Graveyard of old patterns
+# split_pattern = '[\\s_' + string.punctuation.replace('.', '\\.') + ']+'
 # pattern = '[^' + string.letters + ']'
 # pattern = r'[\s_\W]+'
 # pattern = r'[\s_\.,;:!?]+'
 
+# Splitting at non-alphanumeric values
+split_pattern = r'[^a-zA-Z0-9]+'
+
 ## Part 2 - Dictionary of word frequencies
 #
-# TODO too many words are found
-# should be 5714 words in some dictionary that is 5718 with my code
 def getwordfreqs(filename):
     freqs = Counter()
 
     # Open file (not using os.open, mind you)
+    # Using with to automatically close it
     with open(filename, 'r') as file:
         # Iterate through it
-        
         for line in file:
             line = line.rstrip().lower()
+            # Split into words then iterate
             for word in re.split(split_pattern, line):
-                # Set value if not present
-                # freqs.setdefault(word, 0)
-                # Increment frequency of this word
-                #if re.search('[]') == None: or something
-                # TODO add check for non-alphanumeric values
-                # empty string is falsy, yay!
-                if word.isalnum():
+                # Increment frequency of this word if not empty
+                if word:
                     freqs[word] += 1
 
     return freqs
@@ -66,27 +62,28 @@ def getwordfreqs(filename):
 #
 # TODO fasit ['and', 'of', 'the', 'to'] but I get 20 words!
 def getcommonwords(dicts):
-    common = Counter()
+    common = set()
 
     for freqs in dicts:
         # Look through the most common words
-        for pair in freqs.most_common(10):
+        for pair in freqs.most_common(3):
             present = True
-            # If they are present in all the other dictionaries, add them
+            # If they are present in the top 10 of
+            # all the other dictionaries, add them
             for other_freqs in dicts:
-                if not pair[0] in other_freqs:
+                words = []
+                # Creating a list of top 10 words
+                for thing in other_freqs.most_common(10):
+                    words.append(thing[0])
+                # If not in this list, it is not present in all
+                if not pair[0] in words:
                     present = False
+            # Add word to set if it passed (set => no duplicates)
             if present:
-                common[pair[0]] += pair[1]
-                    
-
-    # for freqs in dicts:
-    #     for pair in freqs.most_common(10):
-    #         common[pair[0]] += pair[1]
-
-    #print(common)
+                common.add(pair[0])
     
-    return list(common)
+    # Return sorted list of common words
+    return sorted(list(common))
 
 # print(getwordfreqs('ovinger/05_file_and_text/test.txt'))
 # print(getfilelist('ovinger/05_file_and_text/books'))
@@ -106,7 +103,8 @@ for freqs in dicts:
 
 # Get common words
 common = getcommonwords(dicts)
-for w in common:
-    print(w)
+# for w in common:
+    # print(w)
 
+print(common)
 print('found', len(common), 'common words')
