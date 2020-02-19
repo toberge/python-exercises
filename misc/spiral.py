@@ -11,14 +11,14 @@ def spiral(stairs):
         del stairs[0]
         print(ws + ' '.join(stairs))
 
-# The origin
-print('zettai unmei mokushiroku')
-print('zettai unmei mokushiyami, mokushiroku')
-spiral(['mo', 'ku', 'shi'])
-spiral(['ku', 'mo', 'shi'])
-spiral(['mo', 'ku', 'shi'])
-spiral(['ku', 'mo', 'shi'])
-# Drumming on
+if __name__ == '__main__':
+    # The origin
+    spiral(['mo', 'ku', 'shi'])
+    spiral(['ku', 'mo', 'shi'])
+    spiral(['mo', 'ku', 'shi'])
+    spiral(['ku', 'mo', 'shi'])
+    # Drumming on
 
-print()
-spiral(['eg', 'heiter', 'anne', 'knutsdotter'])
+    print()
+    spiral(['eg', 'heiter', 'anne', 'knutsdotter'])
+    spiral(['kari', 'er', 'mi', 'mor'])
