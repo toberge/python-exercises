@@ -50,3 +50,7 @@ print('-----------------------------------------------')
 for line in get_text('https://toberge.github.io/startpage').split('\n'):
     if match(r'.+https://.*', line) and not 'stylesheet' in line:
         print(split(r'a href="|" target=', line))
+
+soup = BeautifulSoup(get_text('https://toberge.github.io/startpage'), 'html.parser');
+for link in soup.find_all('a'):
+    print(link.get('href'))
