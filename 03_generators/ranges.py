@@ -60,7 +60,7 @@ def myrange_gen(start,end):
     for i in range(0, end - start):
         # Generate a tuple where i is added to start
         # and subtracted from end-1
-        yield (start + i, end - 1 - i)
+        yield start + i, end - 1 - i
 
 if __name__ == '__main__':
     print(myrange_list(1, 10))
