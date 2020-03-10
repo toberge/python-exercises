@@ -3,3 +3,4 @@
 .vscode
 **/books
 *.txt
+__pycache__
