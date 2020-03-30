@@ -11,7 +11,7 @@ class TestDecryption(unittest.TestCase):
 
     def test_actual(self):
         # brute force the thing
-        pk = brute_force((29815, n), CIPHER, 'h')
+        [pk] = list(brute_force((29815, n), CIPHER, 'h'))
         message = decrypt((pk, n), CIPHER)
         self.assertTrue(message.startswith('h'))
     
@@ -19,6 +19,15 @@ class TestDecryption(unittest.TestCase):
         message = decrypt((14599, n), CIPHER)
         self.assertTrue(message.startswith('h'))
         self.assertEqual(message, PLAINTEXT)
+    
+    def test_other_solutions(self):
+        message = decrypt((31175, n), CIPHER)
+        self.assertTrue(message.startswith('h'))
+        self.assertEqual(message, 'h堦堦psⰓ녔녔鸿𖘺𗉁wi𒿘ip鸿֧i𑫂𗉁oֵg녔wi𒿘i녔R惊褏_员ֵ儧p堦os儧s堦鸿𘉉)䧍褏堦堦𑫂𒿘s_𑫂g𑫂i𖘺s堦_pl𑫂i𖘺_R惊褏')
+        message = decrypt((47751, n), CIPHER)
+        self.assertTrue(message.startswith('h'))
+        self.assertEqual(message, 'h摭摭ps莺莺㢅𔮫wi𒎑ip㢅틜i𔨝𔮫o멜g莺wi𒎑i莺R镨貑_𖴳멜抱p摭os抱s摭㢅춢)𐀵貑摭摭𔨝𖴳𒎑s_𔨝g𔨝is摭_pl𔨝i_R镨貑')
+
 
 if __name__ == '__main__':
     unittest.main()
