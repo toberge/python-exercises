@@ -5,7 +5,7 @@ def spiral(stairs):
     ws = ''
     
     print(' '.join(stairs))
-    for i in range(1, len(stairs)):
+    for _ in range(1, len(stairs)):
         stairs.append(stairs[0])
         ws += ' ' * (1 + len(stairs[0]))
         del stairs[0]
