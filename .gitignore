@@ -4,4 +4,6 @@
 **/books
 *.txt
 **/__pycache__
+examFiles*
+*.pdf
 
