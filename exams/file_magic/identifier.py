@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 import sys
 import os
+import struct
 from collections import defaultdict
 
 """
 Python for Programmers
 Exam: File Magic
 Done in about an hour
+(then another half-hour of nitpicking)
 """
 
 # map of byte sequences to file type
@@ -58,9 +60,11 @@ root = ByteNode(0x0)
 for magic, filetype in TYPE_MAP.items():
     current = root
     # All n-1 first bytes as inner nodes
-    for byte in magic[:-1]:
-        # Convert int to byte...
-        byte = byte.to_bytes(1, sys.byteorder)
+    # Using struct.unpack to convert a bytes object into a *list* of bytes.
+    # Format specified as e.g. 10c for 10 times the size of 1 char.
+    # This unpacks the bytes object into a tuple of n-1 bytes objects
+    # - previously we had to do: byte = byte.to_bytes(1, sys.byteorder)
+    for byte in struct.unpack(f'{len(magic)-1}c', magic[:-1]):
         # Each byte in the sequence becomes a node
         newnode = current.getchild(byte)
         # If not already present, add it

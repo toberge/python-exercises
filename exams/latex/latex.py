@@ -5,6 +5,8 @@ import re
 from collections import Counter
 
 """
+Python for Programmers
+Exam: Latex
 this thing will handle the tex
 """
 
