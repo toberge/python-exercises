@@ -2,8 +2,6 @@
 **/.idea
 .vscode
 **/books
-*.txt
-**/__pycache__
-examFiles*
+__pycache__
 *.pdf
 
