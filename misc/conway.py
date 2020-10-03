@@ -31,19 +31,24 @@ def disp_grid(points):
         grid[y][x] = 'X'
     print('\n'.join(''.join(s) for s in grid), end='')
 
+def iterneighbours(point):
+    x, y = point
+    for raw in [(x-1,y),(x+1,y),(x-1,y-1),(x+1,y-1),(x+1,y+1),(x-1,y+1),(x,y+1),(x,y-1)]:
+        # wrap around screen if exceeding
+        yield ((COLS + raw[0]) % COLS, (ROWS + raw[1]) % ROWS)
+
+
 def count_neighbours(point, points):
     # TODO this ain't needed
-    x, y = point
     count = 0
-    for candidate in [(x-1,y),(x+1,y),(x-1,y-1),(x+1,y-1),(x+1,y+1),(x-1,y+1),(x,y+1),(x,y-1)]:
+    for candidate in iterneighbours(point):
         if candidate in points:
             count += 1
     return count
 
 def identify_neighbours(point, points):
     """Return dead, alive"""
-    x, y = point
-    neighbours = {(x-1,y),(x+1,y),(x-1,y-1),(x+1,y-1),(x+1,y+1),(x-1,y+1),(x,y+1),(x,y-1)}
+    neighbours = set(iterneighbours(point))
     return neighbours.difference(points), neighbours.intersection(points)
 
 def tick(points):
